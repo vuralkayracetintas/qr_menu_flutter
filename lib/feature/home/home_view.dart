@@ -7,11 +7,10 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
-          children: [
-            Text('text'),
-          ],
+          children: [Image.asset('assets/images/burger.jpg')],
         ),
       ),
     );
