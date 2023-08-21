@@ -12,14 +12,10 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-          progressIndicatorTheme:
-              const ProgressIndicatorThemeData(color: Colors.white),
+      theme: ThemeData.light().copyWith(
           appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
             centerTitle: true,
-            systemOverlayStyle: SystemUiOverlayStyle.light,
+            systemOverlayStyle: SystemUiOverlayStyle.dark,
           ),
           useMaterial3: true),
       debugShowCheckedModeBanner: false,
