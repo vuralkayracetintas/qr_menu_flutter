@@ -39,7 +39,8 @@ dependencies:
   #core
   kartal: ^3.3.0
   flutter_riverpod: ^2.3.7
-  
+  firebase_core: ^2.15.1
+  cloud_firestore: ^4.9.0
 
 dev_dependencies:
   flutter_test:
