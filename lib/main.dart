@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qr_menu_flutter/feature/home/home_view.dart';
+import 'package:qr_menu_flutter/feature/admin_login/login_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
           ),
           useMaterial3: true),
       debugShowCheckedModeBanner: false,
-      home: const HomeView(),
+      home: const AdminLoginPage(),
     );
   }
 }
