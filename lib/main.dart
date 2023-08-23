@@ -1,12 +1,11 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qr_menu_flutter/firebase_options.dart';
+import 'package:qr_menu_flutter/feature/home/home_view.dart';
+import 'package:qr_menu_flutter/product/initialize/app_start_init.dart';
 
 Future<void> main() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await ApplicationStart.init();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -16,15 +15,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
+      theme: ThemeData.dark().copyWith(
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
+        useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false,
+      home: const HomeView(),
     );
   }
 }
