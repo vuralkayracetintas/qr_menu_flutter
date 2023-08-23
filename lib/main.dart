@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:qr_menu_flutter/feature/admin_login/login_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+void main() => runApp(const ProviderScope(child: MyApp()));
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light().copyWith(
-          appBarTheme: const AppBarTheme(
-            centerTitle: true,
-            systemOverlayStyle: SystemUiOverlayStyle.dark,
-          ),
-          useMaterial3: true),
-      debugShowCheckedModeBanner: false,
-      home: const AdminLoginPage(),
+      title: 'Material App',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Material App Bar'),
+        ),
+        body: const Center(
+          child: Text('Hello World'),
+        ),
+      ),
     );
   }
 }
