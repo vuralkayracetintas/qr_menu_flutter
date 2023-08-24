@@ -4,6 +4,6 @@ class FirebaseCustomException implements Exception {
 
   @override
   String toString() {
-    return '$this.message';
+    return '$this $message';
   }
 }

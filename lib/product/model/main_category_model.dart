@@ -1,21 +1,17 @@
 import 'package:equatable/equatable.dart';
+import 'package:qr_menu_flutter/product/utilty/base/base_firebase_model.dart';
 
-class MainCategoryModel extends Equatable {
+class MainCategoryModel extends Equatable
+    with IdModel, BaseFirebaseModel<MainCategoryModel> {
   const MainCategoryModel({
     this.image,
     this.name,
     this.id,
   });
 
-  factory MainCategoryModel.fromJson(Map<String, dynamic> json) {
-    return MainCategoryModel(
-      image: json['image'] as String?,
-      name: json['name'] as String?,
-      id: json['id'] as String?,
-    );
-  }
   final String? image;
   final String? name;
+  @override
   final String? id;
 
   @override
@@ -39,5 +35,14 @@ class MainCategoryModel extends Equatable {
       'name': name,
       'id': id,
     };
+  }
+
+  @override
+  MainCategoryModel fromJson(Map<String, dynamic> json) {
+    return MainCategoryModel(
+      image: json['image'] as String?,
+      name: json['name'] as String?,
+      id: json['id'] as String?,
+    );
   }
 }
