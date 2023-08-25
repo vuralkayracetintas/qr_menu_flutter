@@ -1,44 +1,31 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_menu_flutter/product/model/foods_model.dart';
 
 class FoodsView extends StatelessWidget {
   const FoodsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final CollectionReference foods =
-        FirebaseFirestore.instance.collection('foods');
-
-    final response = foods.withConverter(
-      fromFirestore: (snapshot, options) {
-        return FoodsModel().fromFirebase(snapshot);
-      },
-      toFirestore: (value, options) {
-        //if (value == null) throw FirebaseCustomException('$value is null');
-        return value.toJson();
-      },
-    ).get();
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Yemekler'),
-            bottom: const TabBar(
-              tabs: [
-                Tab(
-                  text: 'Pizzalar',
-                ),
-                Tab(
-                  text: 'Hamburgerler',
-                ),
-                Tab(
-                  text: 'Makarnalar',
-                ),
-              ],
-            ),
+        appBar: AppBar(
+          title: const Text('Yemekler'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                text: 'Pizzalar',
+              ),
+              Tab(
+                text: 'Hamburgerler',
+              ),
+              Tab(
+                text: 'Makarnalar',
+              ),
+            ],
           ),
-          body: TabBarView(children: [
+        ),
+        body: const TabBarView(
+          children: [
             Center(
               child: Text("It's cloudy here"),
             ),
@@ -48,7 +35,9 @@ class FoodsView extends StatelessWidget {
             Center(
               child: Text("It's sunny here"),
             ),
-          ])),
+          ],
+        ),
+      ),
     );
   }
 }
