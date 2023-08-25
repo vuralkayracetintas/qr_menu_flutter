@@ -19,9 +19,45 @@ class FoodsView extends StatelessWidget {
         return value.toJson();
       },
     ).get();
-    return Scaffold(
-      appBar: AppBar(),
-      body: FutureBuilder(
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Yemekler'),
+            bottom: const TabBar(
+              tabs: [
+                Tab(
+                  text: 'Pizzalar',
+                ),
+                Tab(
+                  text: 'Hamburgerler',
+                ),
+                Tab(
+                  text: 'Makarnalar',
+                ),
+              ],
+            ),
+          ),
+          body: TabBarView(children: [
+            Center(
+              child: Text("It's cloudy here"),
+            ),
+            Center(
+              child: Text("It's rainy here"),
+            ),
+            Center(
+              child: Text("It's sunny here"),
+            ),
+          ])),
+    );
+  }
+}
+
+
+
+/*
+
+FutureBuilder(
         future: response,
         builder: (
           context,
@@ -55,7 +91,6 @@ class FoodsView extends StatelessWidget {
               }
           }
         },
-      ),
-    );
-  }
-}
+      )
+
+*/
