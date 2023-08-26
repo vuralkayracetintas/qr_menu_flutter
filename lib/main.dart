@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
         ),
         appBarTheme: const AppBarTheme(
           centerTitle: true,
+          elevation: 10,
           systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
         useMaterial3: true,

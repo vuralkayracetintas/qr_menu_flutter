@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 @immutable
 class StringConstants {
   const StringConstants._();
-  static const String brandName = 'Pizza 2 Go';
+  static const String adminPanelName = 'Admin Giriş Paneli';
+
+  static const String adminWelcome = 'Hoş geldiniz!';
+  static const String projectON = 'Provided by';
+
+  static const String permissionErrorMessage =
+      'Yetkisiz Giriş! Hatalı bir işlem olduğunu düşünüyorsanız lütfen destek ekibine ulaşın.';
 }
 
 class LabelOverrides extends DefaultLocalizations {
