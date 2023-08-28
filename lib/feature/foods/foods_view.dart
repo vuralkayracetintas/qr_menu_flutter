@@ -24,11 +24,12 @@ class _FoodsViewState extends ConsumerState<FoodsView> {
   Widget build(BuildContext context) {
     final response = ref.watch(homeProvider).foodCategory ?? [];
     return DefaultTabController(
-      length: 3,
+      length: response.length,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Yemekler'),
           bottom: TabBar(
+            isScrollable: true,
             tabs: response.map((item) {
               return Tab(
                 text: item.name ?? '',
@@ -37,16 +38,40 @@ class _FoodsViewState extends ConsumerState<FoodsView> {
           ),
         ),
         //! kategoriye gore yemeklerin listelenecegi yer
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            Center(
-              child: Text("It's cloudy here"),
+            ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text('Yemek $index'),
+                        subtitle: Text('Yemek $index'),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
-            Center(
+            const Center(
               child: Text("It's rainy here"),
             ),
-            Center(
+            const Center(
               child: Text("It's sunny here"),
+            ),
+            Center(
+              child: Text("It's  here"),
+            ),
+            Center(
+              child: Text("It's sunny "),
+            ),
+            Center(
+              child: Text("'s sunny here"),
+            ),
+            Center(
+              child: Text("It's  here"),
             ),
           ],
         ),
@@ -54,8 +79,6 @@ class _FoodsViewState extends ConsumerState<FoodsView> {
     );
   }
 }
-
-
 
 /*
 
@@ -92,6 +115,7 @@ FutureBuilder(
                 return const Text('else');
               }
           }
+
         },
       )
 
