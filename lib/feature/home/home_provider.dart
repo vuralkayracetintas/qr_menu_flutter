@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qr_menu_flutter/product/model/food_category_model.dart';
 import 'package:qr_menu_flutter/product/model/foods_model.dart';
 import 'package:qr_menu_flutter/product/model/main_category_model.dart';
 import 'package:qr_menu_flutter/product/utilty/firebase/firebase_collections.dart';
@@ -26,8 +27,25 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
     }
   }
 
+  Future<void> fetchFoodCategory() async {
+    final newCollectionReferance = FirebaseCollections.category.reference;
+
+    final response = await newCollectionReferance.withConverter(
+      fromFirestore: (snapshot, options) {
+        return const FoodCategoryModel().fromFirebase(snapshot);
+      },
+      toFirestore: (value, options) {
+        return value.toJson();
+      },
+    ).get();
+    if (response.docs.isNotEmpty) {
+      final values = response.docs.map((e) => e.data()).toList();
+      state = state.copyWith(foodCategory: values);
+    }
+  }
+
   Future<void> fecthAndLoad() async {
-    await Future.wait([fetchMainCategory()]);
+    await Future.wait([fetchMainCategory(), fetchFoodCategory()]);
   }
 }
 
@@ -35,21 +53,25 @@ class HomeState extends Equatable {
   const HomeState({
     this.mainCategory,
     this.foods,
+    this.foodCategory,
   });
 
   final List<MainCategoryModel>? mainCategory;
   final List<FoodsModel>? foods;
+  final List<FoodCategoryModel>? foodCategory;
 
   @override
-  List<Object?> get props => [mainCategory, foods];
+  List<Object?> get props => [mainCategory, foods, foodCategory];
 
   HomeState copyWith({
     List<MainCategoryModel>? mainCategory,
     List<FoodsModel>? foods,
+    List<FoodCategoryModel>? foodCategory,
   }) {
     return HomeState(
       mainCategory: mainCategory ?? this.mainCategory,
       foods: foods ?? this.foods,
+      foodCategory: foodCategory ?? this.foodCategory,
     );
   }
 }

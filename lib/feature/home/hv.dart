@@ -21,7 +21,6 @@ class HomeView2 extends ConsumerStatefulWidget {
 class _HomeView2State extends ConsumerState<HomeView2> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.microtask(
       () {

@@ -1,29 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qr_menu_flutter/feature/home/hv.dart';
 
-class FoodsView extends StatelessWidget {
+class FoodsView extends ConsumerStatefulWidget {
   const FoodsView({super.key});
 
   @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _FoodsViewState();
+}
+
+class _FoodsViewState extends ConsumerState<FoodsView> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+      () {
+        ref.read(homeProvider.notifier).fecthAndLoad();
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final response = ref.watch(homeProvider).foodCategory ?? [];
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Yemekler'),
-          bottom: const TabBar(
-            tabs: [
-              Tab(
-                text: 'Pizzalar',
-              ),
-              Tab(
-                text: 'Hamburgerler',
-              ),
-              Tab(
-                text: 'Makarnalar',
-              ),
-            ],
+          bottom: TabBar(
+            tabs: response.map((item) {
+              return Tab(
+                text: item.name ?? '',
+              );
+            }).toList(),
           ),
         ),
+        //! kategoriye gore yemeklerin listelenecegi yer
         body: const TabBarView(
           children: [
             Center(
