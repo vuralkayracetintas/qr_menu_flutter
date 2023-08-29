@@ -61,16 +61,16 @@ class _FoodsViewState extends ConsumerState<FoodsView> {
             const Center(
               child: Text("It's sunny here"),
             ),
-            Center(
+            const Center(
               child: Text("It's  here"),
             ),
-            Center(
+            const Center(
               child: Text("It's sunny "),
             ),
-            Center(
+            const Center(
               child: Text("'s sunny here"),
             ),
-            Center(
+            const Center(
               child: Text("It's  here"),
             ),
           ],
