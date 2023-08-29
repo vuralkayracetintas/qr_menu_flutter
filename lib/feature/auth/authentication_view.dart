@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kartal/kartal.dart';
 import 'package:qr_menu_flutter/core/widgets/text_widgets.dart';
-import 'package:qr_menu_flutter/feature/home/home_view.dart';
+import 'package:qr_menu_flutter/feature/admin_home/admin_home_page.dart';
 import 'package:qr_menu_flutter/product/constants/image_constants.dart';
 import 'package:qr_menu_flutter/product/constants/string_constants.dart';
 
@@ -81,13 +81,14 @@ class _AuthenticationVeiwState extends ConsumerState<AuthenticationVeiw> {
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
+                                    children: <Widget>[
                                       const Text(StringConstants.projectON),
                                       Image.asset(
                                         ImageConstants.logo.toPng,
                                         height:
-                                            context.sized.dynamicHeight(0.1),
-                                        width: context.sized.dynamicHeight(0.1),
+                                            context.sized.dynamicHeight(0.15),
+                                        width:
+                                            context.sized.dynamicHeight(0.15),
                                       )
                                     ],
                                   )
@@ -110,11 +111,12 @@ class _AuthenticationVeiwState extends ConsumerState<AuthenticationVeiw> {
 
   AuthStateChangeAction<SignedIn> _fireBaseLoginMethod() {
     return AuthStateChangeAction<SignedIn>((context, state) {
-      if (state.user != null &&
-          state.user?.uid == 'mFtQ8gzCEpfiZCMrpywF5rCb3E52') {
+      if (state.user != null) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const HomeView()),
+          MaterialPageRoute(
+            builder: (context) => const AdminHomePage(),
+          ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -145,6 +147,7 @@ class _FirebaseLoginUI extends StatelessWidget {
     );
   }
 }
+
 
 
 //! TODO
