@@ -5,7 +5,8 @@ enum FirebaseCollections {
   dessert,
   drinks,
   foods,
-  mainCategory;
+  mainCategory,
+  yemek;
 
   CollectionReference get reference =>
       FirebaseFirestore.instance.collection(name);
