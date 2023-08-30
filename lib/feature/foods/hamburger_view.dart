@@ -35,25 +35,67 @@ class _HamburgerViewState extends ConsumerState<HamburgerView> {
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
           mainAxisExtent: context.sized.height * 0.34,
+          //! TODO responsive fix
         ),
         itemCount: response.length,
         itemBuilder: (context, index) {
           return Card(
-            child: Column(
-              children: [
-                // TODO fix
-                ImageNetwork(
-                  image: response[index].image ?? '',
-                  height: context.sized.height * 0.18,
-                  width: context.sized.width * 0.3,
-                ),
-
-                ListTile(
+            child: InkWell(
+              onTap: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
                   title: Text(response[index].title ?? ''),
-                  subtitle: Text(response[index].subtitle ?? ''),
-                  trailing: Text(response[index].price ?? ''),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Image.network(
+                            response[index].image ?? '',
+                            height: context.sized.height * 0.18,
+                            width: context.sized.width * 0.3,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(child: Text(response[index].subtitle ?? '')),
+                        ],
+                      ),
+                    ],
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'Cancel'),
+                      child: const Text('Cancel'),
+                    ),
+                  ],
                 ),
-              ],
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Image.network(
+                      response[index].image ?? '',
+                    ),
+                  ),
+                  // child: ImageNetwork(
+                  //   image: response[index].image ?? '',
+                  //   height: context.sized.height * 0.18,
+                  //   width: context.sized.width * 0.3,
+                  //   fitWeb: BoxFitWeb.fill,
+                  // ),
+
+                  ListTile(
+                    title: Text(
+                      response[index].title ?? '',
+                      //maxLines: 1,
+                      style: context.general.textTheme.titleMedium?.copyWith(),
+                    ),
+                    subtitle: Text(response[index].price ?? ''),
+                  ),
+                ],
+              ),
             ),
           );
         },
