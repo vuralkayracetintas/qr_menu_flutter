@@ -45,13 +45,33 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
     }
   }
 
-  Future<void> fetchFoods() async {
+  Future<void> fetchPizza() async {
     final newCollectionReferance = FirebaseCollections.yemek.reference
         .doc('Pizzalar')
-        .collection('Karisik Pizza');
+        .collection('Cesitler');
+
     final response = await newCollectionReferance.withConverter(
       fromFirestore: (snapshot, options) {
-        return Response().fromFirebase(snapshot);
+        return YemekModel().fromFirebase(snapshot);
+      },
+      toFirestore: (value, options) {
+        return value.toJson();
+      },
+    ).get();
+    if (response.docs.isNotEmpty) {
+      final values = response.docs.map((e) => e.data()).toList();
+      state = state.copyWith(yemek: values);
+    }
+  }
+
+  Future<void> fetchHamburger() async {
+    final newCollectionReferance = FirebaseCollections.yemek.reference
+        .doc('Hamburger')
+        .collection('Cesitler');
+
+    final response = await newCollectionReferance.withConverter(
+      fromFirestore: (snapshot, options) {
+        return YemekModel().fromFirebase(snapshot);
       },
       toFirestore: (value, options) {
         return value.toJson();
@@ -67,7 +87,8 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
     await Future.wait([
       fetchMainCategory(),
       fetchFoodCategory(),
-      fetchFoods(),
+      fetchPizza(),
+      fetchHamburger()
     ]);
   }
 }
@@ -83,7 +104,7 @@ class HomeState extends Equatable {
   final List<MainCategoryModel>? mainCategory;
   final List<FoodsModel>? foods;
   final List<FoodCategoryModel>? foodCategory;
-  final List<Response>? yemek;
+  final List<YemekModel>? yemek;
 
   @override
   List<Object?> get props => [mainCategory, foods, foodCategory];
@@ -92,7 +113,7 @@ class HomeState extends Equatable {
     List<MainCategoryModel>? mainCategory,
     List<FoodsModel>? foods,
     List<FoodCategoryModel>? foodCategory,
-    List<Response>? yemek,
+    List<YemekModel>? yemek,
   }) {
     return HomeState(
       mainCategory: mainCategory ?? this.mainCategory,

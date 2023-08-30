@@ -6,14 +6,14 @@ import 'package:image_network/image_network.dart';
 import 'package:kartal/kartal.dart';
 import 'package:qr_menu_flutter/feature/home/hv.dart';
 
-class PizzaView extends ConsumerStatefulWidget {
-  const PizzaView({super.key});
+class HamburgerView extends ConsumerStatefulWidget {
+  const HamburgerView({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _PizzaViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HamburgerViewState();
 }
 
-class _PizzaViewState extends ConsumerState<PizzaView> {
+class _HamburgerViewState extends ConsumerState<HamburgerView> {
   @override
   void initState() {
     super.initState();
@@ -28,24 +28,33 @@ class _PizzaViewState extends ConsumerState<PizzaView> {
   Widget build(BuildContext context) {
     final response = ref.watch(homeProvider).yemek ?? [];
     return Scaffold(
-      body: ListView.builder(
+      appBar: AppBar(),
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+          mainAxisExtent: context.sized.height * 0.34,
+        ),
         itemCount: response.length,
         itemBuilder: (context, index) {
-          return Column(
-            children: [
-              Card(
-                child: ListTile(
+          return Card(
+            child: Column(
+              children: [
+                // TODO fix
+                ImageNetwork(
+                  image: response[index].image ?? '',
+                  height: context.sized.height * 0.18,
+                  width: context.sized.width * 0.3,
+                ),
+
+                ListTile(
                   title: Text(response[index].title ?? ''),
                   subtitle: Text(response[index].subtitle ?? ''),
                   trailing: Text(response[index].price ?? ''),
                 ),
-              ),
-              ImageNetwork(
-                image: response[index].image ?? '',
-                height: context.sized.height * 0.18,
-                width: context.sized.width * 0.3,
-              )
-            ],
+              ],
+            ),
           );
         },
       ),

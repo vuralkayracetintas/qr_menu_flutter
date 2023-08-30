@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qr_menu_flutter/feature/foods/hamburger_view.dart';
+import 'package:qr_menu_flutter/feature/foods/yemek_view.dart';
 import 'package:qr_menu_flutter/feature/home/hv.dart';
 
 class FoodsView extends ConsumerStatefulWidget {
@@ -38,41 +40,25 @@ class _FoodsViewState extends ConsumerState<FoodsView> {
           ),
         ),
         //! kategoriye gore yemeklerin listelenecegi yer
-        body: TabBarView(
+        body: const TabBarView(
           children: [
-            ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: Text('Yemek $index'),
-                        subtitle: Text('Yemek $index'),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-            const Center(
-              child: Text("It's rainy here"),
-            ),
-            const Center(
+            HamburgerView(),
+            Center(
               child: Text("It's sunny here"),
             ),
-            const Center(
+            Center(
               child: Text("It's  here"),
             ),
-            const Center(
+            Center(
               child: Text("It's sunny "),
             ),
-            const Center(
+            Center(
               child: Text("'s sunny here"),
             ),
-            const Center(
+            Center(
               child: Text("It's  here"),
             ),
+            PizzaView(),
           ],
         ),
       ),
