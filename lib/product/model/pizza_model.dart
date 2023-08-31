@@ -51,6 +51,5 @@ class PizzaModel extends Equatable with IdModel, BaseFirebaseModel<PizzaModel> {
   }
 
   @override
-  // TODO: implement id
   String? get id => throw UnimplementedError();
 }

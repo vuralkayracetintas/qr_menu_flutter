@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_menu_flutter/product/model/food_category_model.dart';
-import 'package:qr_menu_flutter/product/model/main_category_model.dart';
 import 'package:qr_menu_flutter/product/model/hamburger_model.dart';
+import 'package:qr_menu_flutter/product/model/main_category_model.dart';
 import 'package:qr_menu_flutter/product/model/pizza_model.dart';
 import 'package:qr_menu_flutter/product/utilty/firebase/firebase_collections.dart';
 import 'package:qr_menu_flutter/product/utilty/firebase/firebase_utility.dart';

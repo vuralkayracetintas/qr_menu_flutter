@@ -34,7 +34,6 @@ class _HamburgerViewState extends ConsumerState<HamburgerView> {
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
           mainAxisExtent: context.sized.height * 0.34,
-          //! TODO responsive fix
         ),
         itemCount: response.length,
         itemBuilder: (context, index) {

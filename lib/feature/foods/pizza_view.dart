@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_network/image_network.dart';
 import 'package:kartal/kartal.dart';
 import 'package:qr_menu_flutter/feature/home/hv.dart';
 
@@ -28,14 +27,12 @@ class _PizzaViewState extends ConsumerState<PizzaView> {
   Widget build(BuildContext context) {
     final response = ref.watch(homeProvider).pizza ?? [];
     return Scaffold(
-      appBar: AppBar(),
       body: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
           mainAxisExtent: context.sized.height * 0.34,
-          //! TODO responsive fix
         ),
         itemCount: response.length,
         itemBuilder: (context, index) {
