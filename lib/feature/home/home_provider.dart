@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_menu_flutter/product/model/food_category_model.dart';
-import 'package:qr_menu_flutter/product/model/foods_model.dart';
 import 'package:qr_menu_flutter/product/model/main_category_model.dart';
-import 'package:qr_menu_flutter/product/model/yemek_model.dart';
+import 'package:qr_menu_flutter/product/model/hamburger_model.dart';
+import 'package:qr_menu_flutter/product/model/pizza_model.dart';
 import 'package:qr_menu_flutter/product/utilty/firebase/firebase_collections.dart';
 import 'package:qr_menu_flutter/product/utilty/firebase/firebase_utility.dart';
 
@@ -52,7 +52,7 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
 
     final response = await newCollectionReferance.withConverter(
       fromFirestore: (snapshot, options) {
-        return YemekModel().fromFirebase(snapshot);
+        return PizzaModel().fromFirebase(snapshot);
       },
       toFirestore: (value, options) {
         return value.toJson();
@@ -60,7 +60,7 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
     ).get();
     if (response.docs.isNotEmpty) {
       final values = response.docs.map((e) => e.data()).toList();
-      state = state.copyWith(yemek: values);
+      state = state.copyWith(pizza: values);
     }
   }
 
@@ -71,7 +71,7 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
 
     final response = await newCollectionReferance.withConverter(
       fromFirestore: (snapshot, options) {
-        return YemekModel().fromFirebase(snapshot);
+        return HamburgerModel().fromFirebase(snapshot);
       },
       toFirestore: (value, options) {
         return value.toJson();
@@ -79,7 +79,7 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
     ).get();
     if (response.docs.isNotEmpty) {
       final values = response.docs.map((e) => e.data()).toList();
-      state = state.copyWith(yemek: values);
+      state = state.copyWith(hamburger: values);
     }
   }
 
@@ -96,30 +96,30 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
 class HomeState extends Equatable {
   const HomeState({
     this.mainCategory,
-    this.foods,
+    this.hamburger,
     this.foodCategory,
-    this.yemek,
+    this.pizza,
   });
 
   final List<MainCategoryModel>? mainCategory;
-  final List<FoodsModel>? foods;
   final List<FoodCategoryModel>? foodCategory;
-  final List<YemekModel>? yemek;
+  final List<PizzaModel>? pizza;
+  final List<HamburgerModel>? hamburger;
 
   @override
-  List<Object?> get props => [mainCategory, foods, foodCategory];
+  List<Object?> get props => [mainCategory, foodCategory, hamburger, pizza];
 
   HomeState copyWith({
     List<MainCategoryModel>? mainCategory,
-    List<FoodsModel>? foods,
+    List<HamburgerModel>? hamburger,
     List<FoodCategoryModel>? foodCategory,
-    List<YemekModel>? yemek,
+    List<PizzaModel>? pizza,
   }) {
     return HomeState(
       mainCategory: mainCategory ?? this.mainCategory,
-      foods: foods ?? this.foods,
+      hamburger: hamburger ?? this.hamburger,
       foodCategory: foodCategory ?? this.foodCategory,
-      yemek: yemek ?? this.yemek,
+      pizza: pizza ?? this.pizza,
     );
   }
 }

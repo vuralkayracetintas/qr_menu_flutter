@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_menu_flutter/feature/foods/hamburger_view.dart';
-import 'package:qr_menu_flutter/feature/foods/yemek_view.dart';
+import 'package:qr_menu_flutter/feature/foods/pizza_view.dart';
 import 'package:qr_menu_flutter/feature/home/hv.dart';
 
 class FoodsView extends ConsumerStatefulWidget {

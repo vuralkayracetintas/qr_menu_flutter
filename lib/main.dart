@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qr_menu_flutter/feature/foods/hamburger_view.dart';
-import 'package:qr_menu_flutter/feature/foods/yemek_view.dart';
-
 import 'package:qr_menu_flutter/feature/home/hv.dart';
 import 'package:qr_menu_flutter/product/initialize/app_start_init.dart';
 
@@ -26,7 +23,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const HamburgerView(),
+      home: const HomeView2(),
     );
   }
 }

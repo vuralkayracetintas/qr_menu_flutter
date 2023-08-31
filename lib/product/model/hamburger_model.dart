@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:qr_menu_flutter/product/utilty/base/base_firebase_model.dart';
 
-class YemekModel extends Equatable with IdModel, BaseFirebaseModel<YemekModel> {
-  YemekModel({
+class HamburgerModel extends Equatable
+    with IdModel, BaseFirebaseModel<HamburgerModel> {
+  HamburgerModel({
     this.price,
     this.title,
     this.subtitle,
@@ -17,13 +18,13 @@ class YemekModel extends Equatable with IdModel, BaseFirebaseModel<YemekModel> {
   @override
   List<Object?> get props => [price, title, subtitle, image];
 
-  YemekModel copyWith({
+  HamburgerModel copyWith({
     String? price,
     String? title,
     String? subtitle,
     String? image,
   }) {
-    return YemekModel(
+    return HamburgerModel(
       price: price ?? this.price,
       title: title ?? this.title,
       subtitle: subtitle ?? this.subtitle,
@@ -41,8 +42,8 @@ class YemekModel extends Equatable with IdModel, BaseFirebaseModel<YemekModel> {
   }
 
   @override
-  YemekModel fromJson(Map<String, dynamic> json) {
-    return YemekModel(
+  HamburgerModel fromJson(Map<String, dynamic> json) {
+    return HamburgerModel(
       price: json['price'] as String?,
       title: json['title'] as String?,
       subtitle: json['subtitle'] as String?,

@@ -2,18 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:image_network/image_network.dart';
 import 'package:kartal/kartal.dart';
 import 'package:qr_menu_flutter/feature/home/hv.dart';
 
-class HamburgerView extends ConsumerStatefulWidget {
-  const HamburgerView({super.key});
+class PizzaView extends ConsumerStatefulWidget {
+  const PizzaView({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _HamburgerViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _PizzaViewState();
 }
 
-class _HamburgerViewState extends ConsumerState<HamburgerView> {
+class _PizzaViewState extends ConsumerState<PizzaView> {
   @override
   void initState() {
     super.initState();
@@ -26,8 +26,9 @@ class _HamburgerViewState extends ConsumerState<HamburgerView> {
 
   @override
   Widget build(BuildContext context) {
-    final response = ref.watch(homeProvider).hamburger ?? [];
+    final response = ref.watch(homeProvider).pizza ?? [];
     return Scaffold(
+      appBar: AppBar(),
       body: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
