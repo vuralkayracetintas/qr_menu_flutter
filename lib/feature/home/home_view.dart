@@ -1,75 +1,103 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:image_network/image_network.dart';
-import 'package:qr_menu_flutter/product/model/main_category_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeView extends StatefulWidget {
+import 'package:kartal/kartal.dart';
+import 'package:qr_menu_flutter/feature/dessert/dessert_view.dart';
+import 'package:qr_menu_flutter/feature/drinks/drinks_view.dart';
+import 'package:qr_menu_flutter/feature/foods/foods_view.dart';
+import 'package:qr_menu_flutter/feature/home/home_provider.dart';
+
+final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>((ref) {
+  return HomeNotifier();
+});
+
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends ConsumerState<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+      () {
+        ref.read(homeProvider.notifier).fecthAndLoad();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final CollectionReference mainCategory =
-        FirebaseFirestore.instance.collection('mainCategory');
-
-    final response = mainCategory.withConverter(
-      fromFirestore: (snapshot, options) {
-        return const MainCategoryModel().fromFirebase(snapshot);
-      },
-      toFirestore: (value, options) {
-        //if (value == null) throw FirebaseCustomException('$value is null');
-        return value.toJson();
-      },
-    ).get();
+    final response = ref.watch(homeProvider).Category ?? [];
 
     return Scaffold(
       appBar: AppBar(),
-      body: FutureBuilder(
-        future: response,
-        builder: (
-          context,
-          AsyncSnapshot<QuerySnapshot<MainCategoryModel?>> snapshot,
-        ) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return const Text('none');
-            case ConnectionState.waiting:
-              return const Text('waiting');
-            case ConnectionState.active:
-              return const Text('active');
-            case ConnectionState.done:
-              if (snapshot.hasData) {
-                final values =
-                    snapshot.data!.docs.map((e) => e.data()).toList();
-
-                return ListView.builder(
-                  itemCount: values.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        leading: Container(
-                          width: 100,
-                          height: 100,
-                          color: Colors.red,
-                          child: ImageNetwork(
-                            image: values[index]?.image ?? '',
-                            height: 100,
-                            width: 100,
-                          ),
-                        ),
-                        title: Text(values[index]?.name ?? ''),
+      body: ListView.builder(
+        itemCount: response.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: context.padding.low,
+            child: Padding(
+              padding: context.padding.low,
+              child: InkWell(
+                onTap: () {
+                  if (response[index].name == 'Yemekler') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<FoodsView>(
+                        builder: (context) => const FoodsView(),
                       ),
                     );
-                  },
-                );
-              } else {
-                return const Text('no data');
-              }
-          }
+                  } else if (response[index].name == 'Icecekler') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<DrinksView>(
+                        builder: (context) => const DrinksView(),
+                      ),
+                    );
+                  } else if (response[index].name == 'Tatlilar') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<DessertView>(
+                        builder: (context) => const DessertView(),
+                      ),
+                    );
+                  }
+                },
+                child: Card(
+                  child: SizedBox(
+                    height: context.sized.height * 0.2,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image.network(
+                            response[index].img ?? '',
+                            height: context.sized.height * 0.2,
+                            width: context.sized.width * 0.3,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            response[index].name ?? '',
+                            textAlign: TextAlign.start,
+                            style: context.general.textTheme.displaySmall
+                                ?.copyWith(
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
         },
       ),
     );

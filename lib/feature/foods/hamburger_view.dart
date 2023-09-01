@@ -42,7 +42,7 @@ class _HamburgerViewState extends ConsumerState<HamburgerView> {
               onTap: () => showDialog<String>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
-                  title: Text(response[index].title ?? ''),
+                  title: Text(response[index].name ?? ''),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,14 +50,15 @@ class _HamburgerViewState extends ConsumerState<HamburgerView> {
                       Row(
                         children: [
                           Image.network(
-                            response[index].image ?? '',
+                            response[index].img ?? '',
                             height: context.sized.height * 0.18,
                             width: context.sized.width * 0.3,
                           ),
                           SizedBox(
                             width: 10,
                           ),
-                          Expanded(child: Text(response[index].subtitle ?? '')),
+                          Expanded(
+                              child: Text(response[index].description ?? '')),
                         ],
                       ),
                     ],
@@ -74,7 +75,7 @@ class _HamburgerViewState extends ConsumerState<HamburgerView> {
                 children: [
                   Expanded(
                     child: Image.network(
-                      response[index].image ?? '',
+                      response[index].img ?? '',
                     ),
                   ),
                   // child: ImageNetwork(
@@ -86,7 +87,7 @@ class _HamburgerViewState extends ConsumerState<HamburgerView> {
 
                   ListTile(
                     title: Text(
-                      response[index].title ?? '',
+                      response[index].name ?? '',
                       //maxLines: 1,
                       style: context.general.textTheme.titleMedium?.copyWith(),
                     ),
