@@ -11,5 +11,4 @@ enum FirebaseCollections {
 
   CollectionReference get reference =>
       FirebaseFirestore.instance.collection(name);
-  DocumentReference get reference2 => FirebaseFirestore.instance.doc(name);
 }

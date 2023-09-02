@@ -28,7 +28,7 @@ class _DemoViewState extends ConsumerState<DemoView> {
       length: response.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Yemekler'),
+          title: const Text('Yemekler'),
           bottom: TabBar(
             tabs: response.map((category) => Tab(text: category.name)).toList(),
           ),

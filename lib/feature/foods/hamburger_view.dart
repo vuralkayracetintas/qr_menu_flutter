@@ -58,7 +58,8 @@ class _HamburgerViewState extends ConsumerState<HamburgerView> {
                             width: 10,
                           ),
                           Expanded(
-                              child: Text(response[index].description ?? '')),
+                            child: Text(response[index].description ?? ''),
+                          ),
                         ],
                       ),
                     ],

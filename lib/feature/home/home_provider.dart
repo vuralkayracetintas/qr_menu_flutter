@@ -2,14 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_menu_flutter/product/model/category_model.dart';
 import 'package:qr_menu_flutter/product/model/food_category_model.dart';
-import 'package:qr_menu_flutter/product/model/hamburger_model.dart';
+import 'package:qr_menu_flutter/product/model/foods_model.dart';
 import 'package:qr_menu_flutter/product/model/main_category_model.dart';
-import 'package:qr_menu_flutter/product/model/pizza_model.dart';
+
 import 'package:qr_menu_flutter/product/utilty/firebase/firebase_collections.dart';
 import 'package:qr_menu_flutter/product/utilty/firebase/firebase_utility.dart';
 
 class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
-  HomeNotifier() : super(const HomeState());
+  HomeNotifier() : super(HomeState());
 
   Future<void> fetchMainCategory() async {
     final newCollectionReferance = FirebaseCollections.mainCategory.reference;
@@ -47,26 +47,6 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
     }
   }
 
-  Future<void> fetchCategoryx() async {
-    final newCollectionReferance =
-        FirebaseCollections.Category.reference2.collection('Yemekler');
-
-    final response = await newCollectionReferance.withConverter(
-      fromFirestore: (snapshot, options) {
-        return CategoryModel().fromFirebase(snapshot);
-      },
-      toFirestore: (value, options) {
-        return value.toJson();
-      },
-    ).get();
-
-    if (response.docs.isNotEmpty) {
-      final values = response.docs.map((e) => e.data()).toList();
-      state = state.copyWith(Category: values);
-      print(newCollectionReferance.id);
-    }
-  }
-
   Future<void> fetchFoodCategory() async {
     final newCollectionReferance = FirebaseCollections.category.reference;
 
@@ -85,13 +65,13 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
   }
 
   Future<void> fetchPizza() async {
-    final newCollectionReferance = FirebaseCollections.yemek.reference
-        .doc('Pizzalar')
-        .collection('Cesitler');
+    final newCollectionReferance = FirebaseCollections.Category.reference
+        .doc('Yemekler')
+        .collection('Pizzalar');
 
     final response = await newCollectionReferance.withConverter(
       fromFirestore: (snapshot, options) {
-        return PizzaModel().fromFirebase(snapshot);
+        return FoodsModel().fromFirebase(snapshot);
       },
       toFirestore: (value, options) {
         return value.toJson();
@@ -104,24 +84,24 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
     }
   }
 
-  // Future<void> fetchMakarna() async {
-  //   final newCollectionReferance = FirebaseCollections.Category.reference
-  //       .doc('Yemekler')
-  //       .collection('Makarnalar');
+  Future<void> fetchMakarna() async {
+    final newCollectionReferance = FirebaseCollections.Category.reference
+        .doc('Yemekler')
+        .collection('Makarnalar');
 
-  //   final response = await newCollectionReferance.withConverter(
-  //     fromFirestore: (snapshot, options) {
-  //       return PizzaModel().fromFirebase(snapshot);
-  //     },
-  //     toFirestore: (value, options) {
-  //       return value.toJson();
-  //     },
-  //   ).get();
-  //   if (response.docs.isNotEmpty) {
-  //     final values = response.docs.map((e) => e.data()).toList();
-  //     state = state.copyWith(pizza: values);
-  //   }
-  // }
+    final response = await newCollectionReferance.withConverter(
+      fromFirestore: (snapshot, options) {
+        return FoodsModel().fromFirebase(snapshot);
+      },
+      toFirestore: (value, options) {
+        return value.toJson();
+      },
+    ).get();
+    if (response.docs.isNotEmpty) {
+      final values = response.docs.map((e) => e.data()).toList();
+      state = state.copyWith(makarna: values);
+    }
+  }
 
   Future<void> fetchHamburger() async {
     final newCollectionReferance = FirebaseCollections.Category.reference
@@ -130,7 +110,7 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
 
     final response = await newCollectionReferance.withConverter(
       fromFirestore: (snapshot, options) {
-        return HamburgerModel().fromFirebase(snapshot);
+        return FoodsModel().fromFirebase(snapshot);
       },
       toFirestore: (value, options) {
         return value.toJson();
@@ -149,59 +129,61 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
       fetchFoodCategory(),
       fetchPizza(),
       fetchHamburger(),
-      fetchSubCollections(),
+      fetchMakarna(),
     ]);
   }
 }
 
-Future<void> fetchSubCollections() async {
-  final categoryCollectionRef = FirebaseCollections.Category.reference;
+// Future<void> fetchSubCollections() async {
+//   final categoryCollectionRef = FirebaseCollections.Category.reference;
 
-  final categoryDocument = await categoryCollectionRef.doc('Yemekler').get();
+//   final categoryDocument = await categoryCollectionRef.doc('Yemekler').get();
 
-  if (categoryDocument.exists) {
-    final pizzasCollectionRef =
-        categoryDocument.reference.collection('Hamburgerler');
-    final makarnalarCollectionRef =
-        categoryDocument.reference.collection('Makarnalar');
+//   if (categoryDocument.exists) {
+//     final pizzasCollectionRef =
+//         categoryDocument.reference.collection('Hamburgerler');
+//     final makarnalarCollectionRef =
+//         categoryDocument.reference.collection('Makarnalar');
 
-    final pizzasQuerySnapshot = await pizzasCollectionRef.get();
-    if (pizzasQuerySnapshot.docs.isNotEmpty) {
-      pizzasQuerySnapshot.docs.forEach((pizzasDocument) {
-        print('Hamburger Belge ID: ${pizzasDocument.id}');
-        print('Hamburger Veri: ${pizzasDocument.data()}');
-      });
-    } else {
-      print('Pizza koleksiyonunda belge bulunamadı.');
-    }
+//     final pizzasQuerySnapshot = await pizzasCollectionRef.get();
+//     if (pizzasQuerySnapshot.docs.isNotEmpty) {
+//       pizzasQuerySnapshot.docs.forEach((pizzasDocument) {
+//         print('Hamburger Belge ID: ${pizzasDocument.id}');
+//         print('Hamburger Veri: ${pizzasDocument.data()}');
+//       });
+//     } else {
+//       print('Pizza koleksiyonunda belge bulunamadı.');
+//     }
 
-    final makarnalarQuerySnapshot = await makarnalarCollectionRef.get();
-    if (makarnalarQuerySnapshot.docs.isNotEmpty) {
-      makarnalarQuerySnapshot.docs.forEach((makarnalarDocument) {
-        print('Makarna Belge ID: ${makarnalarDocument.id}');
-        print('Makarna Veri: ${makarnalarDocument.data()}');
-      });
-    } else {
-      print('Makarna koleksiyonunda belge bulunamadı.');
-    }
-  } else {
-    print('Ana belge bulunamadı.');
-  }
-}
+//     final makarnalarQuerySnapshot = await makarnalarCollectionRef.get();
+//     if (makarnalarQuerySnapshot.docs.isNotEmpty) {
+//       makarnalarQuerySnapshot.docs.forEach((makarnalarDocument) {
+//         print('Makarna Belge ID: ${makarnalarDocument.id}');
+//         print('Makarna Veri: ${makarnalarDocument.data()}');
+//       });
+//     } else {
+//       print('Makarna koleksiyonunda belge bulunamadı.');
+//     }
+//   } else {
+//     print('Ana belge bulunamadı.');
+//   }
+// }
 
 class HomeState extends Equatable {
-  const HomeState({
+  HomeState({
     this.mainCategory,
     this.hamburger,
     this.foodCategory,
     this.pizza,
     this.Category,
+    this.makarna,
   });
 
   final List<MainCategoryModel>? mainCategory;
   final List<FoodCategoryModel>? foodCategory;
-  final List<PizzaModel>? pizza;
-  final List<HamburgerModel>? hamburger;
+  final List<FoodsModel>? pizza;
+  final List<FoodsModel>? hamburger;
+  final List<FoodsModel>? makarna;
   final List<CategoryModel>? Category;
 
   @override
@@ -210,9 +192,10 @@ class HomeState extends Equatable {
 
   HomeState copyWith({
     List<MainCategoryModel>? mainCategory,
-    List<HamburgerModel>? hamburger,
+    List<FoodsModel>? hamburger,
+    List<FoodsModel>? makarna,
+    List<FoodsModel>? pizza,
     List<FoodCategoryModel>? foodCategory,
-    List<PizzaModel>? pizza,
     List<CategoryModel>? Category,
   }) {
     return HomeState(
@@ -221,6 +204,7 @@ class HomeState extends Equatable {
       foodCategory: foodCategory ?? this.foodCategory,
       pizza: pizza ?? this.pizza,
       Category: Category ?? this.Category,
+      makarna: makarna ?? this.makarna,
     );
   }
 }

@@ -43,6 +43,5 @@ class CategoryModel extends Equatable
   }
 
   @override
-  // TODO: implement id
   String? get id => throw UnimplementedError();
 }

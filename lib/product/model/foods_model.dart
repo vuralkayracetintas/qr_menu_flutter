@@ -1,9 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:qr_menu_flutter/product/utilty/base/base_firebase_model.dart';
 
-class HamburgerModel extends Equatable
-    with IdModel, BaseFirebaseModel<HamburgerModel> {
-  HamburgerModel({
+class FoodsModel extends Equatable with IdModel, BaseFirebaseModel<FoodsModel> {
+  FoodsModel({
     this.img,
     this.name,
     this.price,
@@ -18,14 +17,14 @@ class HamburgerModel extends Equatable
   @override
   List<Object?> get props => [id, img, name, price, description];
 
-  HamburgerModel copyWith({
+  FoodsModel copyWith({
     int? id,
     String? img,
     String? name,
     String? price,
     String? description,
   }) {
-    return HamburgerModel(
+    return FoodsModel(
       img: img ?? this.img,
       name: name ?? this.name,
       price: price ?? this.price,
@@ -44,8 +43,8 @@ class HamburgerModel extends Equatable
   }
 
   @override
-  HamburgerModel fromJson(Map<String, dynamic> json) {
-    return HamburgerModel(
+  FoodsModel fromJson(Map<String, dynamic> json) {
+    return FoodsModel(
       img: json['IMG'] as String?,
       name: json['Name'] as String?,
       price: json['Price'] as String?,
@@ -54,6 +53,5 @@ class HamburgerModel extends Equatable
   }
 
   @override
-  // TODO: implement id
   String? get id => throw UnimplementedError();
 }

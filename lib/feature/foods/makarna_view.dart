@@ -6,14 +6,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kartal/kartal.dart';
 import 'package:qr_menu_flutter/feature/home/hv.dart';
 
-class PizzaView extends ConsumerStatefulWidget {
-  const PizzaView({super.key});
+class MakarnaView extends ConsumerStatefulWidget {
+  const MakarnaView({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _PizzaViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _MakarnaViewState();
 }
 
-class _PizzaViewState extends ConsumerState<PizzaView> {
+class _MakarnaViewState extends ConsumerState<MakarnaView> {
   @override
   void initState() {
     super.initState();
@@ -26,7 +26,7 @@ class _PizzaViewState extends ConsumerState<PizzaView> {
 
   @override
   Widget build(BuildContext context) {
-    final response = ref.watch(homeProvider).pizza ?? [];
+    final response = ref.watch(homeProvider).makarna ?? [];
     return Scaffold(
       body: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

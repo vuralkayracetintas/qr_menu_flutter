@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_menu_flutter/feature/foods/hamburger_view.dart';
+import 'package:qr_menu_flutter/feature/foods/makarna_view.dart';
 import 'package:qr_menu_flutter/feature/foods/pizza_view.dart';
+
 import 'package:qr_menu_flutter/feature/home/hv.dart';
 
 class FoodsView extends ConsumerStatefulWidget {
@@ -43,6 +45,7 @@ class _FoodsViewState extends ConsumerState<FoodsView> {
         body: const TabBarView(
           children: [
             HamburgerView(),
+            MakarnaView(),
             Center(
               child: Text("It's sunny here"),
             ),
@@ -54,9 +57,6 @@ class _FoodsViewState extends ConsumerState<FoodsView> {
             ),
             Center(
               child: Text("'s sunny here"),
-            ),
-            Center(
-              child: Text("It's  here"),
             ),
             PizzaView(),
           ],
