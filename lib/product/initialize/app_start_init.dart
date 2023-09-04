@@ -13,6 +13,7 @@ class ApplicationStart {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+
     FirebaseUIAuth.configureProviders([
       EmailAuthProvider(),
     ]);
