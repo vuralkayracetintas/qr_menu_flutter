@@ -9,7 +9,7 @@ import 'package:qr_menu_flutter/product/constants/string_constants.dart';
 import 'package:qr_menu_flutter/product/initialize/app_start_init.dart';
 
 Future<void> main() async {
-  await ApplicationStart.init();
+  await ApplicationStart.initialize();
   runApp(const ProviderScope(child: MyApp()));
 }
 
